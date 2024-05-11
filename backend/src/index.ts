@@ -4,16 +4,18 @@ import dotenv from "dotenv";
 import authRoutes from "./routes/auth.routes";
 import connectToDB from "./db/connect";
 
-const app: Express = express();
-
 dotenv.config();
+const app: Express = express();
 const PORT = process.env.PORT || 8080;
+
+
+app.use(express.json());
+
+app.use("/api/auth", authRoutes);
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Express + TypeScript Server');
 });
-
-app.use("/api/auth", authRoutes);
 
 app.listen(PORT, () => {
   connectToDB();
