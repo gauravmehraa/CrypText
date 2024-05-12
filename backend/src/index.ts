@@ -1,4 +1,4 @@
-import express, { Express, Request, Response } from "express";
+import express, { Express } from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 
@@ -10,7 +10,7 @@ import connectToDB from "./db/connect";
 
 dotenv.config();
 const app: Express = express();
-const PORT = process.env.PORT || 8080;
+const PORT: string | null = process.env.PORT || "8080";
 
 
 app.use(express.json());

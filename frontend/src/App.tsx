@@ -1,9 +1,10 @@
 import React from 'react';
+import Login from './pages/Login';
 
 function App() {
   return (
-    <div className="App">
-      hello
+    <div className='p-4 h-screen flex items-center  justify-center'>
+      <Login/>
     </div>
   );
 }

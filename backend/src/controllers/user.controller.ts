@@ -1,12 +1,13 @@
 import { Request, Response } from "express";
 import User from "../models/user.model";
+import { Types } from "mongoose";
 
 export const getUsers = async (req: Request, res: Response) => {
   try{
-    const user = req.user._id;
+    const user: Types.ObjectId = req.user._id;
     const users = await User.find({
       _id: { $ne: user }
-    }).select("-password");
+    }).select("-password -lastLogin -lastLogout -isLoggedIn");
 
     res.status(200).json(users);
   }

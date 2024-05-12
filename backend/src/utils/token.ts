@@ -1,7 +1,8 @@
 import { Response } from "express";
 import jwt from "jsonwebtoken";
+import { Types } from "mongoose";
 
-const generateToken = (userId: unknown, res: Response) => {
+const generateToken = (userId: Types.ObjectId, res: Response) => {
   const token: string = jwt.sign( { userId }, process.env.JWT_SECRET!, {
     expiresIn: '7d',
   });

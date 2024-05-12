@@ -1,12 +1,13 @@
 import { Request, Response } from "express";
 import { Conversation } from "../models/conversation.model";
 import Message from "../models/message.model";
+import { Types } from "mongoose";
 
 export const sendMessage = async (req: Request, res: Response) => {
   try{
     const { message } = req.body;
     const { id: receiverId } = req.params;
-    const senderId = req.user._id;
+    const senderId: Types.ObjectId = req.user._id;
 
     let conversation = await Conversation.findOne({
       participants: { $all: [senderId, receiverId]}
@@ -42,7 +43,7 @@ export const sendMessage = async (req: Request, res: Response) => {
 export const getMessages = async (req: Request, res: Response) => {
   try{
     const { id: receiverId } = req.params
-    const senderId = req.user._id;
+    const senderId: Types.ObjectId = req.user._id;
 
     const conversation = await Conversation.findOne({
       participants: { $all: [senderId, receiverId]}

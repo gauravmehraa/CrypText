@@ -11,21 +11,23 @@ export const signup = async (req: Request, res: Response) => {
       return res.status(400).json({error: "Passwords do not match"});
     }
 
-    const user: String | null = await User.findOne({ username });
+    const user: string | null = await User.findOne({ username });
 
     if(user){
       return res.status(400).json({error: "Username already exists"});
     }
 
     //password hashing using bcrypt
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const salt: string = await bcrypt.genSalt(10);
+    const hashedPassword: string = await bcrypt.hash(password, salt);
 
     const newUser = new User({ 
       name,
       username,
       password: hashedPassword,
       gender,
+      isLoggedIn: true,
+      lastLogin: new Date(),
       profilePicture: `https://avatar.iran.liara.run/public/${gender === 'Male'? 'boy': 'girl'}?username=${username}`
     });
     if(newUser){
@@ -53,11 +55,16 @@ export const login = async (req: Request, res: Response) => {
   try{
     const { username, password } = req.body;
     const user = await User.findOne({ username });
-    const validPassword = await bcrypt.compare(password, user? user.password as string: "");
+    const validPassword: boolean = await bcrypt.compare(password, user? user.password as string: "");
 
     if(!user || !validPassword){
       return res.status(400).json({error: "Invalid username or password"});
     }
+
+    await User.findOneAndUpdate(
+      { username },
+      { isLoggedIn: true, lastLogin: new Date() }
+    )
 
     generateToken(user._id, res);
     res.status(201).json({
@@ -75,11 +82,16 @@ export const login = async (req: Request, res: Response) => {
 
 export const logout = async (req: Request, res: Response) => {
   try{
-    res.cookie("jwt", "", {maxAge: 0});
-    res.status(200).json({message: "Logged out successfully"});
+    const username: string = req.user.username;
+    await User.findOneAndUpdate(
+      { username },
+      { isLoggedIn: false, lastLogout: new Date() }
+    )
+    res.cookie("jwt", "", { maxAge: 0 });
+    res.status(200).json({ message: `Logged out successfully from ${username}`});
   }
   catch(error){
     console.log("Error in logout controller", (error as Error).message);
-    res.status(500).json({error: "Internal Server Error"});
+    res.status(500).json({ error: "Internal Server Error" });
   }
 }
