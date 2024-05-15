@@ -6,9 +6,9 @@ export interface IUser{
   password: string;
   gender: string;
   profilePicture?: string;
-  isLoggedIn: boolean;
-  lastLogin: Date;
-  lastLogout: Date;
+  isLoggedIn?: boolean;
+  lastLogin?: Date;
+  lastLogout?: Date;
 }
 
 const userSchema = new Schema<IUser>({
