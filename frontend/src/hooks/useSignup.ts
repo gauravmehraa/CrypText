@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import toast from 'react-hot-toast';
 import { useAuthContext } from '../context/AuthContext';
 
@@ -10,7 +10,7 @@ const useSignup = () => {
     { name: string, username: string, password: string, confirmPassword: string, gender: string }) => {
     const success: boolean = handleInputErrors({ name, username, password, confirmPassword, gender });
     if(!success) return;
-
+      setLoading(true);
     try{
       const response: Response = await fetch("/api/auth/signup",{
         method: "POST",
@@ -47,17 +47,14 @@ function handleInputErrors({ name, username, password, confirmPassword, gender }
     toast.error("All fields are required");
     return false;
   }
-
   if(password !== confirmPassword){
     toast.error("Passwords should match");
     return false;
   }
-
   if(password.length < 6){
     toast.error("Weak password");
     return false;
   }
-
   return true;
 }
 

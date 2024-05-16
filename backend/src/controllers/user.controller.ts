@@ -8,7 +8,7 @@ export const getUsers = async (req: Request, res: Response) => {
     const users = await User.find({
       _id: { $ne: user }
     }).select("-password -lastLogin -lastLogout -isLoggedIn");
-
+    
     res.status(200).json(users);
   }
   catch (error) {

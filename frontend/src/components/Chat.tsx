@@ -1,22 +1,28 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { TiMessages } from "react-icons/ti";
 import Messages from './Messages'
 import ChatBox from './ChatBox'
+import useConversation from '../store/useConversation';
 
 const Chat = () => {
-  const showSplash = true;
+  const { selectedConversation, setSelectedConversation } = useConversation();
+
+  useEffect(() => {
+
+    return () => setSelectedConversation(null);
+  }, [setSelectedConversation])
   return (
     <div className='md:min-w-[450px] flex flex-col'>
       {
-      showSplash ? <SplashScreen/>:
+      !selectedConversation ? <SplashScreen/>:
       <>
-      <div className='bg-cryptext-gray px-4 py-2 mb-2'>
-        <span className='label-text'> To: </span>
-        {" "}
-        <span className='text-cryptext-red font-bold'> Gaurav Mehra </span>
-      </div>
-      <Messages/>
-      <ChatBox/>
+        <div className='bg-cryptext-gray px-4 py-2 mb-2'>
+          <span className='label-text'> To: </span>
+          {" "}
+          <span className='text-cryptext-red font-bold'>{selectedConversation.name}</span>
+        </div>
+        <Messages/>
+        <ChatBox/>
       </>
     }
     </div>
