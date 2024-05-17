@@ -11,7 +11,17 @@ export default {
       'cryptext-white': '#EDEDED',
       'cryptext-green': '#008170', //005B41
     },
-    extend: {},
+    extend: {
+			animation: {
+				fade: 'fadeIn 1s ease-in-out',
+			},
+			keyframes: {
+				fadeIn: {
+					from: { opacity: 0 },
+					to: { opacity: 1 },
+				},
+			},
+		},
   },
   plugins: [
     require('daisyui'),

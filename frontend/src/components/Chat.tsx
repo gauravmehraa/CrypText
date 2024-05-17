@@ -3,6 +3,7 @@ import { TiMessages } from "react-icons/ti";
 import Messages from './Messages'
 import ChatBox from './ChatBox'
 import useConversation from '../store/useConversation';
+import { useAuthContext } from '../context/AuthContext';
 
 const Chat = () => {
   const { selectedConversation, setSelectedConversation } = useConversation();
@@ -10,7 +11,7 @@ const Chat = () => {
   useEffect(() => {
 
     return () => setSelectedConversation(null);
-  }, [setSelectedConversation])
+  }, [setSelectedConversation]);
   return (
     <div className='md:min-w-[450px] flex flex-col'>
       {
@@ -30,10 +31,11 @@ const Chat = () => {
 }
 
 const SplashScreen = () => {
+  const { authUser } = useAuthContext();
   return(
     <div className='flex items-center justify-center w-full h-full'>
       <div className='flex flex-col px-4 text-center sm:text-lg md:text-xl text-cryptext-white font-semibold items-center gap-2'>
-        <p>Welcome Back <span className='sm:text-lg md:text-xl text-cryptext-red'> Gaurav! </span></p>
+        <p>Welcome Back <span className='sm:text-lg md:text-xl text-cryptext-red'> {authUser.name}! </span></p>
         <p>Start chatting securely</p>
         <TiMessages className='text-3xl md:text-6xl text-center'/>
       </div>

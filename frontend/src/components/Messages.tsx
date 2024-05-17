@@ -2,9 +2,11 @@ import Message from './Message'
 import useGetMessages from '../hooks/useGetMessages'
 import LoadingBubble from './LoadingBubble';
 import { LegacyRef, MutableRefObject, useEffect, useRef } from 'react';
+import useListenMessages from '../hooks/useListenMessage';
 
 const Messages = () => {
   const { loading, messages } = useGetMessages(); 
+  useListenMessages();
   const lastMessage: MutableRefObject<HTMLDivElement | undefined> = useRef<HTMLDivElement>();
 
   useEffect(() => {
@@ -16,7 +18,7 @@ const Messages = () => {
     <div className='px-4 flex-1 overflow-auto'>
 
       {!loading && messages.length> 0 && messages.map((message: { _id: React.Key | null | undefined; }, index: number) => (
-        <div key={message._id} ref={lastMessage as LegacyRef<HTMLDivElement>}>
+        <div key={message._id} ref={lastMessage as LegacyRef<HTMLDivElement>} className=''>
           <Message message={message} />
         </div>
       ))}

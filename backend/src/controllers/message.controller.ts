@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { Conversation } from "../models/conversation.model";
 import Message from "../models/message.model";
 import { Types } from "mongoose";
+import { getReceiverSocketId, io } from "../sockets/socket";
 
 export const sendMessage = async (req: Request, res: Response) => {
   try{
@@ -27,9 +28,12 @@ export const sendMessage = async (req: Request, res: Response) => {
       conversation.messages.push(newMessage._id);
     }
 
-    // implement sockets here
-
     await Promise.all([conversation.save(), newMessage.save()]);
+
+    const receiverSocket = getReceiverSocketId(receiverId);
+    if(receiverSocket){
+      io.to(receiverSocket).emit('newMessage', newMessage);
+    }
 
     res.status(201).json(newMessage);
 
