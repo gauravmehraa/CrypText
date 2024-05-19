@@ -1,4 +1,4 @@
-import { Date, Schema, Types, model } from "mongoose";
+import { Date, Schema, model } from "mongoose";
 
 export interface IUser{
   name: string;
@@ -6,7 +6,6 @@ export interface IUser{
   password: string;
   gender: string;
   profilePicture?: string;
-  isLoggedIn?: boolean;
   lastLogin?: Date;
   lastLogout?: Date;
 }
@@ -35,10 +34,6 @@ const userSchema = new Schema<IUser>({
   profilePicture: {
     type: String,
     default: "",
-  },
-  isLoggedIn: {
-    type: Boolean,
-    default: false,
   },
   lastLogin: {
     type: Date,

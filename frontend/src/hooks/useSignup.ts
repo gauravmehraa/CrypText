@@ -44,7 +44,13 @@ const useSignup = () => {
 function handleInputErrors({ name, username, password, confirmPassword, gender }:
   { name: string, username: string, password: string, confirmPassword: string, gender: string }){
   if(!name || !username || !password || !confirmPassword || !gender){
-    toast.error("All fields are required");
+    let emptyField: string = '';
+    if(!name) emptyField = 'Name';
+    else if(!username) emptyField = 'Username';
+    else if(!password) emptyField = 'Password';
+    else if(!confirmPassword) emptyField = 'Confirming password';
+    else emptyField = 'Selecting gender';
+    toast.error(`${emptyField} is required`);
     return false;
   }
   if(password !== confirmPassword){

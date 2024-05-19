@@ -11,17 +11,17 @@ const Conversation = (props: {conversation: any, lastIndex: boolean}) => {
   return (
     <>
       <div
-        className={`flex gap-2 items-center hover:bg-cryptext-red hover:cursor-pointer rounded ${isSelected? "bg-cryptext-black": ""}`}
+        className={`flex gap-2 p-2 items-center hover:bg-cryptext-red/80 hover:cursor-pointer rounded-xl bg-cryptext-${isSelected? "red/80" : "black"}`}
         onClick={() => setSelectedConversation(props.conversation)}
       >
-        <div className={`avatar ${isOnline? 'online border-1 border-cryptext-green': ''}`}>
-          <div className='w-12 rounded-full'>
+        <div className={`avatar rounded-full border-2 ${isOnline? 'border-cryptext-green online': 'border-white-200'}`}>
+          <div className={`w-12 rounded-full`}>
             <img src={props.conversation.profilePicture} alt='User avatar'/>
           </div>
         </div>
         <div className='flex flex-col flex-1'>
-          <div className='flex gap-3 justify-between'>
-            <p className='font-bold text-cryptext-white'>@{props.conversation.username}</p>
+          <div className='flex gap-6 ml-1'>
+            <p className={`font-semibold text-cryptext-${isOnline? 'white': 'white'}`}>@{props.conversation.username}</p>
           </div>
         </div>
       </div>

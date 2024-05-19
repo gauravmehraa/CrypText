@@ -4,23 +4,28 @@ import Messages from './Messages'
 import ChatBox from './ChatBox'
 import useConversation from '../store/useConversation';
 import { useAuthContext } from '../context/AuthContext';
+import { BsFillTrash3Fill } from "react-icons/bs";
 
 const Chat = () => {
   const { selectedConversation, setSelectedConversation } = useConversation();
 
   useEffect(() => {
-
     return () => setSelectedConversation(null);
   }, [setSelectedConversation]);
   return (
-    <div className='md:min-w-[450px] flex flex-col'>
+    <div className='w-full md:min-w-[450px] flex flex-col'>
       {
       !selectedConversation ? <SplashScreen/>:
       <>
-        <div className='bg-cryptext-gray px-4 py-2 mb-2'>
-          <span className='label-text'> To: </span>
-          {" "}
-          <span className='text-cryptext-red font-bold'>{selectedConversation.name}</span>
+        <div className='flex gap-2 bg-cryptext-white min-h-12 items-center px-4 py-2 mb-2 text-xl justify-between'>
+          <div>
+            <span className='label-text text-xl'> To: </span>
+            {" "}
+            <span className='text-cryptext-gray font-semibold'>{selectedConversation.name}</span>
+          </div>
+          <div>
+            <BsFillTrash3Fill className='text-cryptext-black cursor-pointer hover:text-cryptext-red'/>
+          </div>
         </div>
         <Messages/>
         <ChatBox/>

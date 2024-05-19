@@ -7,7 +7,6 @@ export const signup = async (req: Request, res: Response) => {
   try{
     const { name, username, password, confirmPassword, gender } = req.body;
 
-    
     if(password !== confirmPassword){
       return res.status(400).json({error: "Passwords do not match"});
     }
@@ -27,7 +26,6 @@ export const signup = async (req: Request, res: Response) => {
       username,
       password: hashedPassword,
       gender,
-      isLoggedIn: true,
       lastLogin: new Date(),
       profilePicture: `https://avatar.iran.liara.run/public/${gender === 'Male'? 'boy': 'girl'}?username=${username}`
     });
@@ -86,7 +84,7 @@ export const logout = async (req: Request, res: Response) => {
     const username: string = req.user.username;
     await User.findOneAndUpdate(
       { username },
-      { isLoggedIn: false, lastLogout: new Date() }
+      { lastLogout: new Date() }
     )
     res.cookie("jwt", "", { maxAge: 0 });
     res.status(200).json({ message: `Logged out successfully from ${username}`});

@@ -27,12 +27,12 @@ const Search = () => {
     <form className='flex items-center gap-2' onSubmit={handleSubmit}>
       <input
         type="text"
-        placeholder='Search user'
+        placeholder='Search for your friend!'
         className='input input-bordered rounded-full'
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
-      <button type='submit' className='btn btn-circle bg-cryptext-green text-cryptext-white'>
+      <button type='submit' className='btn btn-circle bg-cryptext-green text-cryptext-white hover:bg-cryptext-red hover:text-cryptext-black'>
         <IoSearchSharp className='w-6 h-6 outline-none'/>
       </button>
     </form>

@@ -21,7 +21,7 @@ const Message = (props: {message: any}) => {
       <div className={`chat-bubble text-cryptext-white ${background} ${fadeClass}`}>
         { props.message.message }
       </div>
-      <div className='chat-footer opacity-70 text-xs flex gap-1 items-center'>
+      <div className='chat-footer opacity-70 m-1 text-xs flex gap-1 items-center'>
         { formattedTime }
       </div>
     </div>

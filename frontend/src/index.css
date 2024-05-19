@@ -14,8 +14,10 @@ body{
 
 ::-webkit-scrollbar-track{
   cursor: pointer;
-  background: #555;
+  background: #3e3e3e;
+  border-radius: 5px;
 }
+
 
 ::-webkit-scrollbar-thumb{
   background: #121212;
