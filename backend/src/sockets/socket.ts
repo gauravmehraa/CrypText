@@ -12,21 +12,19 @@ const io: Server = new Server(server, {
   }
 });
 
-export const getReceiverSocketId = (receiverId: string) => {
+const userSocketMap: Record<string, string> = {}; // userid mapped to socketid
+
+export const getReceiverSocketId = (receiverId: string): string | undefined => {
   return userSocketMap[receiverId];
 }
 
-
-const userSocketMap: Record<string, string> = {}; // userid mapped to socketid
-
 io.on('connection', (socket: Socket) => {
-
-  const userId = socket.handshake.query.userId;
-  if(userId) userSocketMap[userId as string] = socket.id;
+  const userId = socket.handshake.query.userId as string;
+  if(userId) userSocketMap[userId] = socket.id;
   io.emit('getOnlineUsers', Object.keys(userSocketMap));
 
   socket.on('disconnect', () => {
-    delete userSocketMap[userId as string];
+    delete userSocketMap[userId];
     io.emit('getOnlineUsers', Object.keys(userSocketMap));
   })
 })

@@ -1,20 +1,39 @@
 import { Request, Response } from "express";
-import User from "../models/user.model";
+import User, { IUser } from "../models/user.model";
 import bcrypt from "bcryptjs";
 import generateToken from "../utils/token";
 
-export const signup = async (req: Request, res: Response) => {
+interface SignupRequest extends Request{
+  body: {
+    name: string;
+    username: string;
+    password: string;
+    confirmPassword: string;
+    gender: string;
+  };
+}
+
+interface LoginRequest extends Request{
+  body: {
+    username: string;
+    password: string;
+  };
+}
+
+export const signup = async (req: SignupRequest, res: Response): Promise<void> => {
   try{
     const { name, username, password, confirmPassword, gender } = req.body;
 
     if(password !== confirmPassword){
-      return res.status(400).json({error: "Passwords do not match"});
+      res.status(400).json({error: "Passwords do not match"});
+      return;
     }
     
-    const user: string | null = await User.findOne({ username });
+    const user: IUser | null = await User.findOne({ username });
     
     if(user){
-      return res.status(400).json({error: "Username already exists"});
+      res.status(400).json({error: "Username already exists"});
+      return;
     }
     
     //password hashing using bcrypt
@@ -42,7 +61,6 @@ export const signup = async (req: Request, res: Response) => {
     else{
       res.status(400).json({error: "Invalid User Data"});
     }
-
   }
   catch (error) {
     console.log("Error in signup controller", (error as Error).message);
@@ -50,14 +68,21 @@ export const signup = async (req: Request, res: Response) => {
   }
 }
 
-export const login = async (req: Request, res: Response) => {
+export const login = async (req: LoginRequest, res: Response): Promise<void> => {
   try{
     const { username, password } = req.body;
-    const user = await User.findOne({ username });
-    const validPassword: boolean = await bcrypt.compare(password, user? user.password as string: "");
+    const user: IUser | null = await User.findOne({ username });
 
-    if(!user || !validPassword){
-      return res.status(400).json({error: "Invalid username or password"});
+    if (!user || !user.password) {
+      res.status(400).json({ error: "Invalid username or password" });
+      return;
+    }
+
+    const validPassword: boolean = await bcrypt.compare(password, user.password);
+
+    if (!validPassword) {
+      res.status(400).json({ error: "Invalid username or password" });
+      return;
     }
 
     await User.findOneAndUpdate(
@@ -79,7 +104,7 @@ export const login = async (req: Request, res: Response) => {
   }
 }
 
-export const logout = async (req: Request, res: Response) => {
+export const logout = async (req: Request, res: Response): Promise<void> => {
   try{
     const username: string = req.user.username;
     await User.findOneAndUpdate(

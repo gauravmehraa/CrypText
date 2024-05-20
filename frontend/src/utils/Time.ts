@@ -15,7 +15,7 @@ export function Time(dateString: string) {
   const paddedHours: string = padZero(hours);
   const minutes: string = padZero(date.getMinutes());
   
-  return `${paddedHours}:${minutes} ${!settings?.timeFormat || false ? meridian : ''}`;
+  return `${paddedHours}:${minutes}${!settings?.timeFormat || false ? meridian : ''}`;
 }
 
 function padZero(number: number) {

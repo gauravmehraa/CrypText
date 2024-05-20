@@ -1,11 +1,16 @@
 import { Request, Response } from "express";
-import User from "../models/user.model";
+import User, { IUser } from "../models/user.model";
 import { Types } from "mongoose";
 
-export const getUsers = async (req: Request, res: Response) => {
+export const getUsers = async (req: Request, res: Response): Promise<void> => {
   try{
-    const user: Types.ObjectId = req.user._id;
-    const users = await User.find({
+    const user: IUser | undefined = req.user as IUser;
+    if(!user){
+      res.status(404).json({ error: "User not found" });
+      return;
+    }
+
+    const users: IUser[] = await User.find({
       _id: { $ne: user }
     }).select("-password -lastLogin -lastLogout -isLoggedIn");
     

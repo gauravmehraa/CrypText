@@ -27,12 +27,12 @@ const Messages = () => {
       {loading && [...Array(3)].map((_, index) => <LoadingBubble key={index}/>)}
 
       {!loading && messages.length === 0 && (
-        <div className='flex flex-col items-center w-full justify-evenly min-h-48'>
+        <div className='flex flex-col items-center w-full justify-evenly min-h-36'>
           <p className='text-center text-cryptext-red text-xl text-bold mt-4'>
             Start a conversation
             <span className='text-cryptext-white text-xl text-bold'> securely</span>
           </p>
-          <PiChatsFill className='w-20 h-20'/>
+          <PiChatsFill className='w-20 h-20 text-cryptext-green'/>
         </div>
       )}
     </div>

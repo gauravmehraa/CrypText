@@ -20,9 +20,8 @@ export const SocketContext = createContext<SocketContextType>({
   setOnlineUsers: () => {},
 });
 
-export const useSocketContext = () => {
-  return useContext(SocketContext);
-};
+export const useSocketContext = (): SocketContextType => useContext(SocketContext);
+
 
 export const SocketContextProvider: React.FC<SocketContextProviderProps> = ({ children }) => {
   const [socket, setSocket] = useState<Socket | null>(null);

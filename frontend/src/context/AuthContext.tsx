@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from "react";
 
+
 interface AuthContextType{
   authUser: any;
   setAuthUser: React.Dispatch<React.SetStateAction<any>>;
@@ -14,13 +15,11 @@ export const AuthContext = createContext<AuthContextType>({
   setAuthUser: () => {}
 });
 
-export const useAuthContext = () => {
-  return useContext(AuthContext);
-}
+export const useAuthContext = (): AuthContextType => useContext(AuthContext);
 
 export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ children }) => {
   const [authUser, setAuthUser] = useState(
-    JSON.parse(localStorage.getItem("cryptext-user") as string) || null
+    JSON.parse(localStorage.getItem("cryptext-user") || "null")
   );
   return(
     <AuthContext.Provider value = {{authUser, setAuthUser}}>

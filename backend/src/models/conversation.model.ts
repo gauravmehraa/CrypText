@@ -1,6 +1,6 @@
-import { Schema, Types, model } from "mongoose";
+import { Document, Schema, Types, model } from "mongoose";
 
-interface IConversation{
+interface IConversation extends Document{
   participants: Types.ObjectId[];
   messages: Types.ObjectId[];
 }
@@ -10,6 +10,7 @@ const conversationSchema = new Schema<IConversation>({
       {
         type: Schema.Types.ObjectId,
         ref: "User",
+        required: true,
       }
     ],
     messages: [

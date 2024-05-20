@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { TiMessages } from "react-icons/ti";
 import Messages from './Messages'
 import ChatBox from './ChatBox'
 import useConversation from '../store/useConversation';
 import { useAuthContext } from '../context/AuthContext';
-import { BsFillTrash3Fill } from "react-icons/bs";
+import DeleteChat from './DeleteChat';
 
 const Chat = () => {
   const { selectedConversation, setSelectedConversation } = useConversation();
@@ -15,7 +15,9 @@ const Chat = () => {
   return (
     <div className='w-full md:min-w-[450px] flex flex-col'>
       {
-      !selectedConversation ? <SplashScreen/>:
+      !selectedConversation ?
+      <SplashScreen/>
+      :
       <>
         <div className='flex gap-2 bg-cryptext-white min-h-12 items-center px-4 py-2 mb-2 text-xl justify-between'>
           <div>
@@ -23,9 +25,7 @@ const Chat = () => {
             {" "}
             <span className='text-cryptext-gray font-semibold'>{selectedConversation.name}</span>
           </div>
-          <div>
-            <BsFillTrash3Fill className='text-cryptext-black cursor-pointer hover:text-cryptext-red'/>
-          </div>
+          <DeleteChat conversation={selectedConversation}/>
         </div>
         <Messages/>
         <ChatBox/>
