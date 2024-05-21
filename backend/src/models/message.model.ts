@@ -5,6 +5,7 @@ export interface IMessage{
   senderId: Types.ObjectId;
   receiverId: Types.ObjectId;
   message: string;
+  isDeleted: Boolean;
 }
 
 const messageSchema = new Schema<IMessage>({
@@ -21,6 +22,11 @@ const messageSchema = new Schema<IMessage>({
   message: {
     type: String,
     required : true,
+  },
+  isDeleted: {
+    type: Boolean,
+    required: true,
+    default: false,
   }
 }, { timestamps: true });
 

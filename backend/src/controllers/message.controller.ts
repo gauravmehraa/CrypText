@@ -52,7 +52,10 @@ export const getMessages = async (req: Request, res: Response): Promise<void> =>
 
     const conversation = await Conversation.findOne({
       participants: { $all: [senderId, receiverId]}
-    }).populate("messages");
+    }).populate({
+      path: "messages",
+      match: { isDeleted: false }
+    });
     
     if(!conversation){
       res.status(200).json([]);
@@ -73,15 +76,20 @@ export const deleteMessages = async (req: Request, res: Response): Promise<void>
     const { id: receiverId } = req.params
     const senderId: Types.ObjectId = req.user._id as Types.ObjectId;
 
-    let conversation = await Conversation.findOneAndUpdate(
-      { participants: { $all: [senderId, receiverId]} },
-      { messages: [] }
-    );
+    const conversation = await Conversation.findOne({
+      participants: { $all: [senderId, receiverId] }
+    });
 
     if(!conversation || conversation.messages.length === 0){
       res.status(500).json({error: "No messages to be deleted"});
       return;
     }
+
+    await Message.updateMany(
+      { _id: { $in: conversation.messages } },
+      { $set: { isDeleted: true } }
+    );
+
     await conversation.save();
     res.status(201).json({message: "Messages successfully deleted"});
   }
