@@ -5,50 +5,31 @@ import { FaCheck } from "react-icons/fa";
 import useSettings from "../hooks/useSettings";
 import { useSettingsContext } from "../context/SettingsContext";
 import { useState } from "react";
+import Setting from "../components/Setting";
 
 const Settings = () => {
   const { saving, save, resetting, reset } = useSettings();
   const { settings } = useSettingsContext();
   const [updatedSettings, setUpdatedSettings] = useState(settings) || null;
-  const style = `flex p-2 mx-6 my-4 p-6 font-semibold justify-between rounded-xl bg-cryptext-gray h-16"`
 
   return (
-    <div className='flex flex-col overflow-hidden xl:w-1/2 lg:w-full h-3/4 border rounded-lg border-cryptext-gray'>
+    <div className='flex flex-col overflow-hidden w-full max-sm:-mt-16 lg:w-3/5 h-fit border rounded-lg border-cryptext-gray'>
 
-      <div className='flex gap-2 bg-cryptext-white/90 min-h-20 items-center px-4 py-2 mb-2 text-xl text-cr'>
-        <Link to='/'><IoArrowBackOutline className='text-cryptext-red hover:text-cryptext-green w-8 h-8'/></Link>
-        <p className='w-full font-bold text-cryptext-black text-2xl text-center'>Settings</p>
+      <div className='flex gap-2 bg-cryptext-white/90 h-12 sm:h-20 items-center px-4 py-2 mb-2 text-xl text-cr'>
+        <Link to='/'><IoArrowBackOutline className='text-cryptext-red hover:text-cryptext-green w-6 h-6 sm:w-8 sm:h-8'/></Link>
+        <p className='w-full font-semibold text-cryptext-black text-lg sm:text-xl text-center mr-6 sm:mr-8'>Settings</p>
       </div>
       
       <div className="h-full">
-        <div className={style}>
-          24-Hour Time Format
-          <div className="flex gap-3">
-            <div>Off</div>
-            <input
-              type="checkbox"
-              className="toggle toggle-error"
-              checked={updatedSettings?.timeFormat || false}
-              onClick={() => setUpdatedSettings({...updatedSettings, timeFormat: !updatedSettings?.timeFormat || false})}
-              onChange={(e) => {}}
-            />
-            <div>On</div>
-          </div>
-        </div>
-        <div className={style}>
-          24-Hour Time Format
-          <div className="flex gap-3">
-            <div>Off</div>
-            <input
-              type="checkbox"
-              className="toggle toggle-error"
-              checked={updatedSettings?.timeFormat || false}
-              onClick={() => setUpdatedSettings({...updatedSettings, timeFormat: !updatedSettings?.timeFormat || false})}
-              onChange={(e) => {}}
-            />
-            <div>On</div>
-          </div>
-        </div>
+        <Setting title="24-Hour Time Format" leftText="Off" rightText="On">
+          <input
+            type="checkbox"
+            className="toggle toggle-error toggle-sm sm:toggle-md"
+            checked={updatedSettings?.timeFormat || false}
+            onClick={() => setUpdatedSettings({...updatedSettings, timeFormat: !updatedSettings?.timeFormat || false})}
+            onChange={(e) => {}}
+          />
+        </Setting>
       </div>
 
       <div className="p-8 flex justify-end gap-4">

@@ -13,7 +13,7 @@ const Chat = () => {
     return () => setSelectedConversation(null);
   }, [setSelectedConversation]);
   return (
-    <div className='w-full md:min-w-[450px] flex flex-col'>
+    <div className='w-full md:min-w-[450px] flex flex-col h-4/5 sm:h-full'>
       {
       !selectedConversation ?
       <SplashScreen/>

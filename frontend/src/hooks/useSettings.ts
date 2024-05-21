@@ -36,7 +36,6 @@ const useSettings = () => {
       setSettings(null);
       localStorage.removeItem("cryptext-settings");
       save({});
-      toast.success("Settings successfully reset");
     }
     catch (error){
       toast.error((error as Error).message);

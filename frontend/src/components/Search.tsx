@@ -17,6 +17,7 @@ const Search = () => {
     const conversation = conversations.find((c: any) => c.name.toLowerCase().includes(search.toLowerCase()));
     if(conversation){
       setSelectedConversation(conversation);
+      setSearch("");
     }
     else{
       toast.error("No user found");
@@ -24,11 +25,11 @@ const Search = () => {
   }
 
   return (
-    <form className='flex items-center gap-2' onSubmit={handleSubmit}>
+    <form className='flex items-center gap-2 pt-4 sm:pt-0' onSubmit={handleSubmit}>
       <input
         type="text"
-        placeholder='Search for your friend!'
-        className='input input-bordered rounded-full'
+        placeholder='Search user'
+        className='input input-bordered rounded-full w-full'
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
