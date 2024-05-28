@@ -7,6 +7,10 @@ export interface IUser{
   password: string;
   gender: string;
   profilePicture?: string;
+  publicKey: Buffer;
+  encryptedPrivateKey: Buffer;
+  iv: Buffer;
+  salt: Buffer;
   lastLogin?: Date;
   lastLogout?: Date;
 }
@@ -35,6 +39,22 @@ const userSchema = new Schema<IUser>({
   profilePicture: {
     type: String,
     default: "",
+  },
+  publicKey: {
+    type: Buffer,
+    required: true,
+  },
+  encryptedPrivateKey: {
+    type: Buffer,
+    required: true,
+  },
+  iv: {
+    type: Buffer,
+    required: true,
+  },
+  salt: {
+    type: Buffer,
+    required: true,
   },
   lastLogin: {
     type: Date,

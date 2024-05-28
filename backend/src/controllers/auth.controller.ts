@@ -10,6 +10,10 @@ interface SignupRequest extends Request{
     password: string;
     confirmPassword: string;
     gender: string;
+    publicKey: Buffer;
+    encryptedPrivateKey: Buffer;
+    iv: Buffer;
+    salt: Buffer;
   };
 }
 
@@ -22,7 +26,7 @@ interface LoginRequest extends Request{
 
 export const signup = async (req: SignupRequest, res: Response): Promise<void> => {
   try{
-    const { name, username, password, confirmPassword, gender } = req.body;
+    const { name, username, password, confirmPassword, gender, publicKey, encryptedPrivateKey, iv, salt } = req.body;
 
     if(password !== confirmPassword){
       res.status(400).json({error: "Passwords do not match"});
@@ -37,13 +41,17 @@ export const signup = async (req: SignupRequest, res: Response): Promise<void> =
     }
     
     //password hashing using bcrypt
-    const salt: string = await bcrypt.genSalt(10);
-    const hashedPassword: string = await bcrypt.hash(password, salt);
+    const passwordSalt: string = await bcrypt.genSalt(10);
+    const hashedPassword: string = await bcrypt.hash(password, passwordSalt);
 
     const newUser = new User({ 
       name,
       username,
       password: hashedPassword,
+      publicKey,
+      encryptedPrivateKey,
+      iv,
+      salt,
       gender,
       lastLogin: new Date(),
       profilePicture: `https://avatar.iran.liara.run/public/${gender === 'Male'? 'boy': 'girl'}?username=${username}`
@@ -96,6 +104,9 @@ export const login = async (req: LoginRequest, res: Response): Promise<void> => 
       name: user.name,
       username: user.username,
       profilePicture: user.profilePicture,
+      encryptedPrivateKey: user.encryptedPrivateKey,
+      iv: user.iv,
+      salt: user.salt,
     });
   }
   catch(error){
