@@ -7,7 +7,7 @@ const Sidebar = () => {
     <div className='flex flex-col border-r border-slate-500 p-4 h-1/5 sm:h-full'>
       <Navbar isBottom={false}/>
       <Search/>
-      <div className='divider divider-slate-100'></div>
+      {window.innerWidth >= 640 && <div className='divider divider-slate-100'></div>}
       {window.innerWidth >= 640 && <Conversations/>}
       {window.innerWidth >= 640 && <Navbar isBottom={true}/>}
     </div>

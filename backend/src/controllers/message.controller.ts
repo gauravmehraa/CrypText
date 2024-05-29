@@ -6,7 +6,7 @@ import { getReceiverSocketId, io } from "../sockets/socket";
 
 export const sendMessage = async (req: Request, res: Response): Promise<void> => {
   try{
-    const { message } = req.body;
+    const { encryptedMessage, iv } = req.body;
     const { id: receiverId } = req.params;
     const senderId: Types.ObjectId = req.user._id as Types.ObjectId;
 
@@ -22,7 +22,7 @@ export const sendMessage = async (req: Request, res: Response): Promise<void> =>
     }
 
     const newMessage = new Message({
-      senderId, receiverId, message
+      senderId, receiverId, encryptedMessage, iv
     })
 
     if(newMessage){
@@ -54,7 +54,8 @@ export const getMessages = async (req: Request, res: Response): Promise<void> =>
       participants: { $all: [senderId, receiverId]}
     }).populate({
       path: "messages",
-      match: { isDeleted: false }
+      match: { isDeleted: false },
+      select: "-isDeleted -__v -updatedAt"
     });
     
     if(!conversation){

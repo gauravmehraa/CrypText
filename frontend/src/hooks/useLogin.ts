@@ -1,11 +1,7 @@
 import { useState } from 'react'
 import toast from 'react-hot-toast';
 import { useAuthContext } from '../context/AuthContext';
-import { decryptPrivateKey } from '../utils/keys';
-
-const toBuffer = (array: Uint8Array): ArrayBuffer => {
-  return array.buffer.slice(array.byteOffset, array.byteLength + array.byteOffset)
-}
+import { toBuffer, decryptPrivateKey, toArray } from '../utils/keys';
 
 const useLogin = () => {
   const [loading, setLoading] = useState(false);
@@ -27,12 +23,12 @@ const useLogin = () => {
       if(data.error){
         throw new Error(data.error);
       }
-      const encryptedPrivateKeyBuffer = toBuffer(new Uint8Array(data.encryptedPrivateKey.data));
-      const ivBuffer = toBuffer(new Uint8Array(data.iv.data));
-      const saltBuffer = toBuffer(new Uint8Array(data.salt.data));
+      const encryptedPrivateKeyBuffer = toBuffer(data.encryptedPrivateKey);
+      const ivBuffer = toBuffer(data.iv);
+      const saltBuffer = toBuffer(data.salt);
       const privateKey = await decryptPrivateKey(encryptedPrivateKeyBuffer, password, ivBuffer, saltBuffer);
 
-      data.privateKey = Array.from(new Uint8Array(privateKey));
+      data.privateKey = toArray(privateKey);
       delete data.encryptedPrivateKey;
       delete data.iv;
       delete data.salt;

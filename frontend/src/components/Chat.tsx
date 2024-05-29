@@ -19,7 +19,7 @@ const Chat = () => {
       <SplashScreen/>
       :
       <>
-        <div className='flex gap-2 bg-cryptext-white min-h-12 items-center px-4 py-2 mb-2 text-xl justify-between'>
+        <div className='flex gap-2 bg-cryptext-white min-h-12 items-center px-4 py-2 sm:mb-2 text-xl justify-between'>
           <div>
             <span className='label-text text-xl'> To: </span>
             {" "}

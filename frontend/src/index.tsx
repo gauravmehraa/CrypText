@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { AuthContextProvider } from './context/AuthContext';
 import { SocketContextProvider } from './context/SocketContext';
 import { SettingsContextProvider } from './context/SettingsContext';
+import { KeysContextProvider } from './context/KeysContext';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -14,11 +15,13 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthContextProvider>
-        <SocketContextProvider>
-          <SettingsContextProvider>
-            <App />
-          </SettingsContextProvider>
-        </SocketContextProvider>
+        <KeysContextProvider>
+          <SocketContextProvider>
+            <SettingsContextProvider>
+              <App />
+            </SettingsContextProvider>
+          </SocketContextProvider>
+        </KeysContextProvider>
       </AuthContextProvider>
     </BrowserRouter>
   </React.StrictMode>

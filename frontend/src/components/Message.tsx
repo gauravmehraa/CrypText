@@ -1,12 +1,15 @@
 import { useAuthContext } from '../context/AuthContext';
+import { useSettingsContext } from '../context/SettingsContext';
 import useConversation from '../store/useConversation';
-import { Time } from '../utils/Time';
-
+import { generateTimestamp } from '../utils/timestamp';
 const Message = (props: {message: any}) => {
+
   const { authUser } = useAuthContext();
   const { selectedConversation } = useConversation();
+  const { settings } = useSettingsContext();
+
   const fromMe: boolean = props.message.senderId === authUser._id;
-  const formattedTime = Time(props.message.createdAt);
+  const formattedTime = generateTimestamp(props.message.createdAt, settings.timeFormat);
   const profilePicture = fromMe? authUser.profilePicture: selectedConversation.profilePicture;
   const background = `bg-cryptext-${fromMe ? 'red' : 'green'}`
   const fadeClass = props.message.shouldFade? 'animate-fade': '';
@@ -19,7 +22,7 @@ const Message = (props: {message: any}) => {
         </div>
       </div>
       <div className={`chat-bubble text-cryptext-white ${background} ${fadeClass}`}>
-        { props.message.message }
+        { props.message.decryptedMessage }
       </div>
       <div className='chat-footer opacity-70 m-1 text-xs flex gap-1 items-center'>
         { formattedTime }

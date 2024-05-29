@@ -13,7 +13,7 @@ const Settings = () => {
   const [updatedSettings, setUpdatedSettings] = useState(settings) || null;
 
   return (
-    <div className='flex flex-col overflow-hidden w-full max-sm:-mt-16 lg:w-3/5 h-fit border rounded-lg border-cryptext-gray'>
+    <div className='flex flex-col mx-4 sm:mx-0 overflow-hidden w-full max-sm:-mt-16 lg:w-3/5 h-fit border rounded-lg border-cryptext-gray'>
 
       <div className='flex gap-2 bg-cryptext-white/90 h-12 sm:h-20 items-center px-4 py-2 mb-2 text-xl text-cr'>
         <Link to='/'><IoArrowBackOutline className='text-cryptext-red hover:text-cryptext-green w-6 h-6 sm:w-8 sm:h-8'/></Link>

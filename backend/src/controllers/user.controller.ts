@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import User, { IUser } from "../models/user.model";
-import { Types } from "mongoose";
 
 export const getUsers = async (req: Request, res: Response): Promise<void> => {
   try{
@@ -12,7 +11,7 @@ export const getUsers = async (req: Request, res: Response): Promise<void> => {
 
     const users: IUser[] = await User.find({
       _id: { $ne: user }
-    }).select("-password -lastLogin -lastLogout -isLoggedIn");
+    }).select("-password -encryptedPrivateKey -iv -salt -lastLogin -lastLogout -updatedAt -createdAt -__v");
     
     res.status(200).json(users);
   }

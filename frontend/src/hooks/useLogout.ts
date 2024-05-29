@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import toast from 'react-hot-toast';
 import { useAuthContext } from '../context/AuthContext';
+import { useKeysContext } from '../context/KeysContext';
 
 const useLogout = () => {
   const [loading, setLoading] = useState(false);
   const { setAuthUser } = useAuthContext();
+  const { setKeys } = useKeysContext();
 
   const logout = async() => {
     setLoading(true);
@@ -24,6 +26,7 @@ const useLogout = () => {
 
       //context
       setAuthUser(null);
+      setKeys(null);
       
     }
     catch (error){

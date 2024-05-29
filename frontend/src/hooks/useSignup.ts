@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import toast from 'react-hot-toast';
 import { useAuthContext } from '../context/AuthContext';
-import { encryptPrivateKey, generateKeys } from '../utils/keys';
+import { encryptPrivateKey, generateKeys, toArray } from '../utils/keys';
 
 const useSignup = () => {
   const [loading, setLoading] = useState(false);
@@ -22,10 +22,10 @@ const useSignup = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name, username, password, confirmPassword, gender,
-          publicKey: Array.from(new Uint8Array(publicKey)),
-          encryptedPrivateKey: Array.from(new Uint8Array(encryptedPrivateKey)),
-          iv: Array.from(new Uint8Array(iv)),
-          salt: Array.from(new Uint8Array(salt))
+          publicKey: toArray(publicKey),
+          encryptedPrivateKey: toArray(encryptedPrivateKey),
+          iv: toArray(iv),
+          salt: toArray(salt)
         }),
       });
 
@@ -33,7 +33,7 @@ const useSignup = () => {
       if(data.error){
         throw new Error(data.error);
       }
-      data.privateKey = Array.from(new Uint8Array(privateKey));
+      data.privateKey = toArray(privateKey);
 
       //cache
       localStorage.setItem("cryptext-user", JSON.stringify(data));

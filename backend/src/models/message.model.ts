@@ -4,7 +4,8 @@ export interface IMessage{
   _id: Types.ObjectId;
   senderId: Types.ObjectId;
   receiverId: Types.ObjectId;
-  message: string;
+  encryptedMessage: Buffer;
+  iv: Buffer;
   isDeleted: Boolean;
 }
 
@@ -19,8 +20,12 @@ const messageSchema = new Schema<IMessage>({
     ref: "User",
     required: true,
   },
-  message: {
-    type: String,
+  encryptedMessage: {
+    type: Buffer,
+    required : true,
+  },
+  iv: {
+    type: Buffer,
     required : true,
   },
   isDeleted: {
