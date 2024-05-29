@@ -14,7 +14,7 @@ const useListenMessages = () => {
         setMessages([...messages, newMessage]);
       }
       else{
-        toast(`New message: ${newMessage.message}`,{
+        toast(`New message received.`,{
         icon: '🔔',
         style: {
           borderRadius: '10px',

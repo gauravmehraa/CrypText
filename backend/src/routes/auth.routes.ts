@@ -1,22 +1,13 @@
-import express, { NextFunction, Request, Response, Router } from "express";
-import { signup, login, logout } from "../controllers/auth.controller";
+import express, { Router } from "express";
 import protectRoute from "../middleware/protectRoute";
+import { signup, login, logout } from "../controllers/auth.controller";
 
 const router: Router = express.Router();
 
-// HTTP POST - Signup
-router.post("/signup", (req: Request, res: Response) => {
-  signup(req, res);
-});
+router.post("/signup", signup);
 
-// HTTP POST - Login
-router.post("/login", (req: Request, res: Response) => {
-  login(req, res);
-});
+router.post("/login", login);
 
-// HTTP POST - Logout
-router.post("/logout", protectRoute, (req: Request, res: Response) => {
-  logout(req, res);
-});
+router.post("/logout", protectRoute, logout);
 
 export default router;

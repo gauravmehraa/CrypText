@@ -1,6 +1,5 @@
 import { createContext, useContext, useState } from "react";
 
-
 interface AuthContextType{
   authUser: any;
   setAuthUser: React.Dispatch<React.SetStateAction<any>>;

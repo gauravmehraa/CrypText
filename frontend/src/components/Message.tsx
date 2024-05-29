@@ -1,15 +1,15 @@
 import { useAuthContext } from '../context/AuthContext';
 import { useSettingsContext } from '../context/SettingsContext';
 import useConversation from '../store/useConversation';
-import { generateTimestamp } from '../utils/timestamp';
-const Message = (props: {message: any}) => {
+import { generateTimestamp} from '../utils/timestamp';
 
+const Message = (props: {message: any}) => {
   const { authUser } = useAuthContext();
   const { selectedConversation } = useConversation();
   const { settings } = useSettingsContext();
 
   const fromMe: boolean = props.message.senderId === authUser._id;
-  const formattedTime = generateTimestamp(props.message.createdAt, settings.timeFormat);
+  const formattedTime = generateTimestamp(props.message.createdAt, settings.timeFormat, settings.dateStamp);
   const profilePicture = fromMe? authUser.profilePicture: selectedConversation.profilePicture;
   const background = `bg-cryptext-${fromMe ? 'red' : 'green'}`
   const fadeClass = props.message.shouldFade? 'animate-fade': '';

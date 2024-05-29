@@ -1,6 +1,6 @@
 import express, { Router } from "express";
-import { getUsers } from "../controllers/user.controller";
 import protectRoute from "../middleware/protectRoute";
+import { getUsers } from "../controllers/user.controller";
 
 const router: Router = express.Router();
 

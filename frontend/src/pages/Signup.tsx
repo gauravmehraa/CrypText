@@ -1,4 +1,4 @@
-import React, { ChangeEvent, ChangeEventHandler, FormEvent, useState } from 'react'
+import { ChangeEvent, ChangeEventHandler, FormEvent, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Gender from '../components/Gender';
 import useSignup from '../hooks/useSignup';

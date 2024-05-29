@@ -3,28 +3,7 @@ import User, { IUser } from "../models/user.model";
 import bcrypt from "bcryptjs";
 import generateToken from "../utils/token";
 
-interface SignupRequest extends Request{
-  body: {
-    name: string;
-    username: string;
-    password: string;
-    confirmPassword: string;
-    gender: string;
-    publicKey: Buffer;
-    encryptedPrivateKey: Buffer;
-    iv: Buffer;
-    salt: Buffer;
-  };
-}
-
-interface LoginRequest extends Request{
-  body: {
-    username: string;
-    password: string;
-  };
-}
-
-export const signup = async (req: SignupRequest, res: Response): Promise<void> => {
+export const signup = async (req: Request, res: Response): Promise<void> => {
   try{
     const { name, username, password, confirmPassword, gender, publicKey, encryptedPrivateKey, iv, salt } = req.body;
 
@@ -76,7 +55,7 @@ export const signup = async (req: SignupRequest, res: Response): Promise<void> =
   }
 }
 
-export const login = async (req: LoginRequest, res: Response): Promise<void> => {
+export const login = async (req: Request, res: Response): Promise<void> => {
   try{
     const { username, password } = req.body;
     const user: IUser | null = await User.findOne({ username });

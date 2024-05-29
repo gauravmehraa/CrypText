@@ -30,6 +30,15 @@ const Settings = () => {
             onChange={(e) => {}}
           />
         </Setting>
+        <Setting title="Show Dates on Messages" leftText="Off" rightText="On">
+          <input
+            type="checkbox"
+            className="toggle toggle-error toggle-sm sm:toggle-md"
+            checked={updatedSettings?.dateStamp || false}
+            onClick={() => setUpdatedSettings({...updatedSettings, dateStamp: !updatedSettings?.dateStamp || false})}
+            onChange={(e) => {}}
+          />
+        </Setting>
       </div>
 
       <div className="p-8 flex justify-end gap-4">

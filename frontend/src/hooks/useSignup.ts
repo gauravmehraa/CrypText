@@ -49,7 +49,6 @@ const useSignup = () => {
       setLoading(false);
     }
   }
-
   return {signup, loading};
 }
 
