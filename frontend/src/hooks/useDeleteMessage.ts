@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 const useDeleteMessage = () => {
   const [loading, setLoading] = useState(false);
 
-  const deleteMessages = async(conversation: any) => {
+  const deleteAllMessages = async(conversation: any) => {
     setLoading(true);
     try{
       const response: Response = await fetch(`/api/messages/clear/${conversation._id}`,{
@@ -23,7 +23,12 @@ const useDeleteMessage = () => {
       setLoading(false);
     }
   }
-  return { loading, deleteMessages }
+
+  const deleteSelectedMessages = async(conversation: any) => {
+    
+  }
+
+  return { loading, deleteAllMessages, deleteSelectedMessages}
 }
 
 export default useDeleteMessage;

@@ -11,7 +11,7 @@ export const getUsers = async (req: Request, res: Response): Promise<void> => {
 
     const users: IUser[] = await User.find({
       _id: { $ne: user }
-    }).select("-password -encryptedPrivateKey -iv -salt -lastLogin -lastLogout -updatedAt -createdAt -__v");
+    }).select("-password -encryptedPrivateKey -iv -salt -lastLogin -lastLogout -updatedAt -__v");
     
     res.status(200).json(users);
   }

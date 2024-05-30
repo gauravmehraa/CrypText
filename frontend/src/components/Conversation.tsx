@@ -21,9 +21,9 @@ const Conversation = (props: {conversation: any, lastIndex: boolean}) => {
         </div>
         <div className='flex flex-col flex-1'>
           <div className='flex gap-6 ml-1'>
-            <p className={`font-semibold text-cryptext-${isOnline? 'white': 'white'}`}>
+            <p className='font-semibold text-cryptext-white'>
               @{props.conversation.username}
-              </p>
+            </p>
           </div>
         </div>
       </div>

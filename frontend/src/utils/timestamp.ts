@@ -21,20 +21,32 @@ export const padZero = (number: number) => {
 export function generateDatestamp(timestamp: string): string {
   const today = new Date();
   const targetDate = new Date(timestamp);
-
-  const diffTime = Math.abs(today.getTime() - targetDate.getTime());
+  const todayDateOnly = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const targetDateOnly = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate());
+  const diffTime = todayDateOnly.getTime() - targetDateOnly.getTime();
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-  if (diffDays === 0) {
-      return 'Today';
-  } else if (diffDays === 1) {
-      return 'Yesterday';
-  } else if (diffDays <= 7) {
-      const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-      return weekdays[targetDate.getDay()];
-  } else {
-      const dd = String(targetDate.getDate()).padStart(2, '0');
-      const mm = String(targetDate.getMonth() + 1).padStart(2, '0');
-      return `${dd}-${mm}`;
+  if(diffDays === 0) return 'Today';
+  else if(diffDays === 1) return 'Yesterday';
+  else if(diffDays <= 7){
+    const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    return weekdays[targetDateOnly.getDay()];
   }
+  else{
+    const dd = String(targetDateOnly.getDate()).padStart(2, '0');
+    const mm = String(targetDateOnly.getMonth() + 1).padStart(2, '0');
+    return `${dd}-${mm}`;
+  }
+}
+
+export function getJoinDate(timestamp: string): string {
+  const months = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+  const date = new Date(timestamp);
+  const day = date.getDate();
+  const month = months[date.getMonth()];
+  const year = date.getFullYear();
+  return `${day} ${month} ${year}`;
 }

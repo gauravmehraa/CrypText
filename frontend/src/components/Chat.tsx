@@ -5,6 +5,7 @@ import ChatBox from './ChatBox'
 import useConversation from '../store/useConversation';
 import { useAuthContext } from '../context/AuthContext';
 import DeleteChat from './DeleteChat';
+import Profile from './Profile';
 
 const Chat = () => {
   const { selectedConversation, setSelectedConversation } = useConversation();
@@ -12,6 +13,7 @@ const Chat = () => {
   useEffect(() => {
     return () => setSelectedConversation(null);
   }, [setSelectedConversation]);
+
   return (
     <div className='w-full md:min-w-[450px] flex flex-col h-4/5 sm:h-full'>
       {
@@ -20,11 +22,7 @@ const Chat = () => {
       :
       <>
         <div className='flex gap-2 bg-cryptext-white min-h-12 items-center px-4 py-2 sm:mb-2 text-xl justify-between'>
-          <div>
-            <span className='label-text text-xl'> To: </span>
-            {" "}
-            <span className='text-cryptext-gray font-semibold'>{selectedConversation.name}</span>
-          </div>
+          <Profile user={selectedConversation}/>
           <DeleteChat conversation={selectedConversation}/>
         </div>
         <Messages/>

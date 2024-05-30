@@ -5,11 +5,11 @@ import { MouseEvent } from "react";
 
 const DeleteChat = ( props: {conversation: any} ) => {
 
-  const { deleteMessages, loading } = useDeleteMessage();
+  const { deleteAllMessages, loading } = useDeleteMessage();
   const { setMessages } = useConversation(); 
 
   const handleSubmit = async(e: MouseEvent) => {
-    await deleteMessages(props.conversation);
+    await deleteAllMessages(props.conversation);
     setMessages([]);
   }
 
@@ -22,8 +22,8 @@ const DeleteChat = ( props: {conversation: any} ) => {
     <dialog id="delete_confirmation" className="modal">
       <div className="modal-box w-11/12 max-w-xl">
         <h3 className="font-bold text-xl text-cryptext-white">Delete your converastion with
-          <span className="text-xl font-bold text-cryptext-red"> {props.conversation.name} </span>
-        ?</h3>
+          <span className="text-xl font-bold text-cryptext-red"> {props.conversation.name} </span>?
+        </h3>
         <p className="py-4 text-lg">Messages once deleted cannot be recovered.</p>
         <p className="text-sm text-cryptext-white/10">poof. gone.</p>
         <div className="modal-action">
