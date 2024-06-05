@@ -6,10 +6,9 @@ import useListenMessages from '../hooks/useListenMessage';
 import { PiChatsFill } from "react-icons/pi";
 import useConversation from '../store/useConversation';
 
-const Messages = () => {
+const Messages = (props: {selectedMessages: Set<React.Key>, setSelectedMessages: React.Dispatch<React.SetStateAction<Set<React.Key>>>}) => {
   const { loading, messages } = useGetMessages(); 
   const { selectedConversation } = useConversation()
-  const [selectedMessages, setSelectedMessages] = useState<Set<React.Key>>(new Set());
   useListenMessages();
   const lastMessage: MutableRefObject<HTMLDivElement | undefined> = useRef<HTMLDivElement>();
 
@@ -20,11 +19,11 @@ const Messages = () => {
   }, [messages]);
 
   useEffect(() => {
-    setSelectedMessages(new Set());
+    props.setSelectedMessages(new Set());
   }, [selectedConversation])
-
+  
   const handleClick = (messageId: React.Key) => {
-    setSelectedMessages(prevSelectedMessages => {
+    props.setSelectedMessages(prevSelectedMessages => {
       const newSelectedMessages = new Set(prevSelectedMessages);
       if (newSelectedMessages.has(messageId)) {
         newSelectedMessages.delete(messageId);
@@ -42,12 +41,12 @@ const Messages = () => {
         <div
           key={message._id}
           ref={lastMessage as LegacyRef<HTMLDivElement>}
-          className={`message-container ${selectedMessages.has(message._id!) ? 'bg-cryptext-gray' : ''} rounded-lg px-2`}
+          className={`message-container ${props.selectedMessages.has(message._id!) ? 'bg-cryptext-gray' : ''} rounded-lg px-2`}
           onClick={() => handleClick(message._id!)}
         >
           <Message
             message={message} 
-            isSelected={selectedMessages.has(message._id!)}
+            isSelected={props.selectedMessages.has(message._id!)}
           />
         </div>
       ))}

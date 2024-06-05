@@ -38,7 +38,6 @@ const useGetMessages = () => {
             decryptedMessage: decryptedMessage
           };
         }));
-
         setMessages(decryptedData);
       }
       catch (error){

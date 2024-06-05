@@ -4,7 +4,6 @@ import useConversation from "../store/useConversation";
 import { MouseEvent } from "react";
 
 const DeleteChat = ( props: {conversation: any} ) => {
-
   const { deleteAllMessages, loading } = useDeleteMessage();
   const { setMessages } = useConversation(); 
 

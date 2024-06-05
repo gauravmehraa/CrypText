@@ -26,7 +26,7 @@ export const sendMessage = async (req: Request, res: Response): Promise<void> =>
     })
 
     if(newMessage){
-      conversation.messages.push(newMessage._id);
+      conversation.messages.push(newMessage._id as Types.ObjectId);
     }
 
     await Promise.all([conversation.save(), newMessage.save()]);
@@ -57,12 +57,22 @@ export const getMessages = async (req: Request, res: Response): Promise<void> =>
       match: { isDeleted: false },
       select: "-isDeleted -__v -updatedAt"
     });
+
     
     if(!conversation){
       res.status(200).json([]);
       return;
     }
 
+    const unreadMessages = conversation.messages.filter(message =>
+      !(message as unknown as IMessage).isRead && (message as unknown as IMessage).senderId.toString() == receiverId
+    );
+    await Promise.all(unreadMessages.map(message => {
+      return Message.updateOne(
+        { _id: message._id, receiverId: { $eq: senderId } },
+        { $set: { isRead: true, readAt: new Date() } }
+      );
+    }));
     const messages = conversation.messages;
     res.status(200).json(messages);
   }

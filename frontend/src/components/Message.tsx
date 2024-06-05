@@ -2,7 +2,7 @@ import { useAuthContext } from '../context/AuthContext';
 import { useSettingsContext } from '../context/SettingsContext';
 import useConversation from '../store/useConversation';
 import { generateTimestamp} from '../utils/timestamp';
-import { IoCheckmarkDone } from "react-icons/io5";
+import { IoCheckmark, IoCheckmarkDone } from "react-icons/io5";
 
 const Message = (props: {message: any, isSelected: boolean}) => {
   const { authUser } = useAuthContext();
@@ -27,7 +27,7 @@ const Message = (props: {message: any, isSelected: boolean}) => {
       </div>
       <div className='chat-footer opacity-70 m-1 text-xs text-blue-500 flex gap-1 items-center'>
         { formattedTime }
-        { fromMe && <IoCheckmarkDone className={`w-4 h-4 ${props.message.isRead? 'text-blue-500': 'text-lime-500'}`}/>}
+        { fromMe && (props.message.isRead? <IoCheckmarkDone className='w-4 h-4'/>: <IoCheckmark className='w-4 h-4'/>)}
       </div>
     </div>
   )

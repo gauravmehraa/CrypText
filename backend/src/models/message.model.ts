@@ -6,6 +6,8 @@ export interface IMessage{
   receiverId: Types.ObjectId;
   encryptedMessage: Buffer;
   iv: Buffer;
+  isRead: Boolean;
+  readAt: Date;
   isDeleted: Boolean;
 }
 
@@ -27,6 +29,15 @@ const messageSchema = new Schema<IMessage>({
   iv: {
     type: Buffer,
     required : true,
+  },
+  isRead: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
+  readAt: {
+    type: Date,
+    required: false,
   },
   isDeleted: {
     type: Boolean,

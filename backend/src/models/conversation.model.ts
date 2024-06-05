@@ -1,4 +1,5 @@
 import { Document, Schema, Types, model } from "mongoose";
+import { IMessage } from "./message.model";
 
 interface IConversation extends Document{
   participants: Types.ObjectId[];
